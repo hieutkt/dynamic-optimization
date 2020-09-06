@@ -1,0 +1,271 @@
+#+title: Dynamic optimization: the Ramsey-Cass-Koopman model
+#+date: 2020-09-06
+#+options: H:2 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+columns: %45ITEM %10BEAMER_env(Env) %10BEAMER_act(Act) %4BEAMER_col(Col) %8BEAMER_opt(Opt)
+#+latex_class: beamer
+#+latex_class_options: [10pt]
+#+property:  header-args :eval no
+#+beamer_theme: metropolis
+#+beamer_color_theme:
+#+beamer_font_theme:
+#+beamer_inner_theme:
+#+beamer_outer_theme:
+#+beamer_header:
+#+beamer_header: \setbeamercolor{alerted text}{fg=red!70!black}
+#+latex_header: \usepackage{adjustbox}
+#+latex_header: \usepackage[backend=bibtex,sorting=ydnt,style=authoryear]{biblatex}
+#+latex_header: \AtBeginBibliography{\footnotesize}
+#+latex_header: \addbibresource{~/Dropbox/Notes/Research/papers.bib}
+#+latex_header: \usepackage{xeCJK}
+#+latex_header: \usefonttheme{professionalfonts}
+#+latex_compiler: xelatex
+
+* Introduction
+** The Ramsey-Cass-Koopmans (RCK) model
+
+- textcite:Ramsey1928 introduced a model of optimal savings. The model was not well-received at that time because it was too mathematically demanding.
+- Almost thirty years later, the model was getting tractions when textcite:RePEc:cwl:cwldpp:163 and textcite:Cass1965 formalized and made extensions to the original model.
+
+This model is commonly refered to as the *Ramsey-Cass-Koopmans model of optimal growth*.
+
+** Why this model
+
+- The RCK model is iconic in neoclassical growth theories, and provides a natural benchmark case.
+- The RCK model examine dynamics optimizations of over an infinite horizon, which makes it much easier to approach from the optimal control PoV
+- The RCK model endogenize consumption, which makes it one of the first micro-founded models.
+
+* Building blocks of the model
+** Production function
+
+There is a large number of identical firms, producing a common production . Each has access to the production function:
+
+$$
+Y = \Phi(K, L)
+$$
+
+Which is *homogeneous* with both $K$ and $L$.
+
+We use the lowercase form $y$ and $k$ to denote output per labour and capital per labour:
+
+$$
+y = \phi(k)
+$$
+
+where $\phi^{\prime}(\cdot) > 0$ and $\phi^{\prime\prime}(\cdot) < 0$, $\lim_{k \to 0} \phi^{'}(k) = \infty$ and $\lim_{k \to \infty} \phi^{'}(k) = 0$
+
+** Firms
+
+Firms face the constraints in capital:
+
+$$
+\dot{K} = I - \delta K = Y - C - \delta K
+$$
+
+# divide by $L$:
+
+# $$
+# \frac{\dot{K}}{L} = y - c - \delta k = \phi(k) - c - \delta k
+# $$
+
+# Using the
+
+# #+begin_export latex
+# \begin{align*}
+# \dot{K} &\equiv \frac{dK}{dt}  \\
+#         &= \frac{d(kL)}{dt} = k \frac{dL}{dt} + L \frac{dk}{dt} \\
+#         &= knL + L \dot{k} \\
+#         &= L(kn + \dot{k}) \\
+# \rightarrow \dot{k} &= \phi(k) - c - (n + \delta)k
+# \end{align*}
+# #+end_export
+
+Expanding $\dot{K}$ into $\frac{d(kL)}{dt}$, then use the product rule and divide $L$ from both sides in the above equation give us:
+
+$$
+\dot{k} = \phi(k) - c - (n + \delta)k
+$$
+
+Also consumptions should be less than income from the same time period: $0 \leq c(t) \leq \phi[k(t)]$
+
+** Utility function
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+
+The household's utility function takes the form
+
+$$
+U = \int_{t=0}^{\infty} e^{-\rho t}U(c(t))L(t)dt
+$$
+
+where
+- $\rho$ is the *discount rate*, the greater is $\rho$, the less the household values futures consumption relative to current consumption.
+- $U(c(t))$ is the *instantatneous utility function*,
+
+$$
+\int_0^{\infty}U(c)L(t)e^{-\rho t} dt = \int_0^{\infty} U(c) L_{0} e^{nt} e^-{\rho t} dt = L_0 \int_{0}^{\infty} U(c)e^{-(\rho-n)}dt
+$$
+
+
+#+beamer: \framebreak
+
+$U(c(t))$ usually take the *constant-relative-risk-aversion* form (cite:arrow1965aspects,Pratt1964):
+
+$$
+U(c(t)) = \frac{c(t)^{1-\theta}}{1-\theta}, \quad \theta  0, \quad \rho - n - (1 - \theta) > 0
+$$
+
+where:
+- $\theta$ represents the household's willingness to shift consumption between different periods: elasticity of subtitution between consumption at any two point in time is $\frac{1}{\theta^{2}}$
+- The relative risk aversion $RRA = -\frac{cU^{''}(c)}{U^{'}(c)}= \theta$   is constant
+- $\rho - n - (1 - \theta) > 0$ ensures that lifetime utilities do not diverge.
+
+In special case of $\theta \to 1$, the instantaneous utility function simplifies to $ln(c)$.
+
+* Model Analysis
+** The optimization problem
+
+#+begin_export latex
+\begin{align*}
+\text{Maximize} \quad & \int_0^{\infty} U(c)e^{-rt} dt \\
+\text{s.t.} \quad     & \dot{k} = \phi(k) -c - (n + \delta)k \\
+                  & k(0) = k_{0} \\
+\text{and} \quad      & 0 \leq c(t) \leq \phi[k(t)]
+\end{align*}
+#+end_export
+
+** The optimal control problem
+For the Hamiltonian:
+
+$$
+H = U(c)e^{rt} + \lambda\left[\phi(k) - c - (n + \delta) k \right]
+$$
+
+The equations-of-motion conditions are written as:
+
+#+begin_export latex
+\begin{equation}
+  \dot{\lambda} = - \frac{\partial H}{\partial k} \Leftrightarrow \dot{\lambda} = -\lambda[\theta^{'}(k) - (n + \delta)]
+\end{equation}
+
+\begin{equation}
+  \dot{k} = \theta(k) - c - (n + \delta) k
+\end{equation}
+#+end_export
+
+
+Since $H$ is convex and $c$ is unrestricted, we can accordingly find the maximum of $H$ by setting:
+
+\begin{equation}
+\frac{\partial H}{\partial c} = U^{\prime}(c) e^{-rt} - \lambda = 0 \Leftrightarrow U^{\prime}(c) = \lambda e^{rt}
+\end{equation}
+
+** The optimal control problem :ATTACH:
+:PROPERTIES:
+:ID:       c26256cf-a3c2-41ac-8ef8-ae6b8fcbae72
+:END:
+
+Examination on convexity of $H$ (Fig. 9.2 cite:chiang2000elements):
+
+[[attachment:_20200904_060843screenshot.png]]
+
+** The Current-Value Hamiltonian
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+
+In economics, the integrand function $F$ often contains a *discount factor* $e^{\rho t}$:
+
+$$
+F(t,y,u) = G(t,y,u)e^{\rho t}
+$$
+
+We define a new multiplier $m$ such that:
+
+$$
+m = \lambda e^{\rho t}
+$$
+
+then $H_c \equiv He^{\rho t} = G(t, y, u) + mf(t,y,u)$
+
+$G$ is called the *Instanteous Utility Function*.
+
+#+beamer: \framebreak
+
+The new conditions can be rearranged as
+
+1. $\max_{u} H_c \quad \text{for all } t \in [0, T]$
+2. $\frac{\partial H_c}{\partial y} = - \dot{m} + \rho m$
+3. $\frac{\partial H}{\partial u} = 0$
+4. And a transversality condition
+
+** The optimal control problem (rephrased)
+
+For the current-value Hamiltonian:
+
+$$
+H_{c} = U(c) + m[\phi(k) - c - (n + \delta)k]
+$$
+
+The derivative conditions are as follow:
+
+#+begin_export latex
+\begin{equation} \label{eq1}
+ \frac{\partial H_{c}}{\partial c} = U^{\prime}(c) - m = 0
+\end{equation}
+
+\begin{equation} \label{eq2}
+  \dot{k} = \frac{\partial H_{c}}{\partial m} = \phi(k) - c - (n + \delta)k
+\end{equation}
+
+\begin{equation*}
+\dot{m} &= -\frac{\partial H_{c}}{\partial k} + rm = -m[\phi^{\prime}(k) - (n + \delta)] + rm \\
+\end{equation*}
+
+\begin{equation} \label{eq3}
+\Leftrightarrow  \dot{m} &= -m[\phi^{\prime}(k) - (n + \delta + r)]
+\end{equation}
+
+#+end_export
+
+** Constructing the Phase Diagram
+
+#+begin_export latex
+From (\ref{eq1}) and (\ref{eq3}) we have:
+
+\begin{equation} \label{eq4}
+  \dot{c} = - \frac{U^{\prime}(c)}{U^{\prime\prime}(c)}\left[\phi^{\prime}(k) - (n + \delta + r)\right]
+\end{equation}
+#+end_export
+
+Along with (\ref{eq2}):
+
+$$
+\dot{k} = \frac{\partial H_{c}}{\partial m} = \phi(k) - c - (n + \delta)k
+$$
+
+We calculate the value where $\dot{c} = 0$ and $\dot{k} = 0$:
+
+#+begin_export latex
+\begin{align}
+  \begin{cases}
+    (\ref{eq2}) &\Rightarrow \dot{k}=0 \Leftrightarrow c = \phi(k) - (n + \delta)k \\
+    (\ref{eq4}) &\Rightarrow \dot{c}=0 \Leftrightarrow \phi^{\prime}(k) = n + \delta + r
+  \end{cases}
+\end{align}
+#+end_export
+
+** Phase diagram analysis :ATTACH:
+   :PROPERTIES:
+   :ID:       9df184e2-538c-40bc-94f4-590d9dfde5ac
+   :END:
+The $c-k$ phase diagram (Fig. 2.3 cite:romer19_advan):
+
+[[attachment:_20200904_073411screenshot.png]]
+
+
+** References
+:PROPERTIES:
+:BEAMER_opt: allowframebreaks
+:END:
+\printbibliography

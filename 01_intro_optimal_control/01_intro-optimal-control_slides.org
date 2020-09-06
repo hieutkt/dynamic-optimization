@@ -1,0 +1,268 @@
+#+title: Dynamic Optimization in Economics: Optimal Control Theory
+#+date: 2020-08-28
+#+options: H:2 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+columns: %45ITEM %10BEAMER_env(Env) %10BEAMER_act(Act) %4BEAMER_col(Col) %8BEAMER_opt(Opt)
+#+latex_class: beamer
+#+latex_class_options: [10pt]
+#+property:  header-args :eval no
+#+beamer_theme: metropolis
+#+beamer_color_theme:
+#+beamer_font_theme:
+#+beamer_inner_theme:
+#+beamer_outer_theme:
+#+beamer_header:
+#+beamer_header: \setbeamercolor{alerted text}{fg=red!70!black}
+#+latex_header: \usepackage{adjustbox}
+#+latex_header: \usepackage[backend=bibtex,sorting=ydnt,style=authoryear]{biblatex}
+#+latex_header: \AtBeginBibliography{\footnotesize}
+#+latex_header: \addbibresource{~/Dropbox/Notes/Research/papers.bib}
+#+latex_header: \usepackage{xeCJK}
+#+latex_header: \usefonttheme{professionalfonts}
+#+latex_compiler: xelatex
+
+# The presentation may need:
+# TODO A cool brief on who tf Hamolnian is
+# NOTE Background on Pontryagin and the bois
+# NOTE Background on Bellman
+# NOTE More GOTCHAS
+# TODO Introduction to phase diagram
+
+* Introduction
+** Why should we care about dynamics optimization?
+Dynamic economic models (according to cite:sargent1987dynamic):
+
+- People with purposes, beliefs, constraints
+- Governments with powers to tax, spend, borrow, redistribute
+- Technologies for producing goods, services, physical and human capital
+- Stochastic processes describing information flows and economics shocks
+- An equilibrium concept describing how marrkets and rules and regualtions reconcile people's diverse purposes and possibilities
+
+** Why do we care about dynamic optimizations
+
+The solution sought in /classical calculus/ methods of finding free and constrained extrema and /mathematical programming/ usually consists of *a single optimal magnitude for every choice variable*, such as the optimal level of output per week and the optimal price to charge for a product. It does not call for a *schedule of optimal sequential action* (cite:chiang2000elements).
+
+The dynamic optimization problem poses the question of what is the optimal magnitude of a *choice variable*:
+- in each period of time within the *planning-period* (discrete-time)
+- each point of time in an *interval* (continous-time)
+- or even an *infinite planning horizon*
+
+\linebreak
+- Notation :: the optimal time path of a (continous-time) variable $y$ will be denoted by $y^{*}(t)$.
+
+# TODO Where is the definitions for state variables and control variables?
+
+** Calculus of Variations: the Shortest Path Problem :ATTACH:
+   :PROPERTIES:
+   :ID:       69261d6e-45cb-48c7-ad20-329492e5a524
+   :END:
+[[attachment:_20200827_025507screenshot.png]]
+
+The optmimal solution is the path $ACEHJZ$. An one-stage-at-a-time optimization procedure will /not/ yield the optimal path.
+
+** Calculus of Variations: Some terminology
+
+- Notation :: the general notation of for mapping from path to points (the *functional*): $V\left[y(t)\right]$ .
+- Notation :: to denote time intervals or segment of a path, we use $y\left[0, T\right]$ or $y\left[0, \tau\right]$ .
+- Notation :: Optimal path: $y^{*}(t)$ or $y^{*}$ path
+- Notation :: initial point (time and state): tuple $(0, A)$
+- Notation :: terminal point (time and state): tuple $(T, Z)$
+
+** Calculus of Variations: Some terminology :ATTACH:
+   :PROPERTIES:
+   :ID:       ef1c4ee5-ce14-4222-a08f-08656bcb8c1b
+   :END:
+[[attachment:_20200827_030235screenshot.png]]
+
+** Calculus of Variations: Some terminology
+
+Type of *variable terminal points* problems:
+a. The *fixed-time-horizon problem*, or *fixed-time problem*, or *vertical-terminal-line problem* means that the terminal time $T$ is fixed, terminal state $Z$ may vary.
+b. *Fixed-endpoint problem* or *horizontal-terminal-line problem*: terminal state $Z$ is fixed, terminal time $T$ may vary. Problems of this type in which $T$ is minimized is called a *time-optimal problem*
+c. *terminal-curve* or *terminal surface problems*: $T$ and $Z$ are tied together by a constrant $Z = \Phi(T)$. Such relation plots a *terminal curve* (or a *terminal surface*, in higher dimensions).
+d. infinite planning horizon problems
+
+In /variable-terminal-points/ problems, the planner has one more degree of freedom than /fixed-terminal-point/ problems, so an extra condition is needed: the *transversality condition*, because it normally appears as a description of how the optimal path 'transverse' the terminal line/curve.
+
+** The Objective functional
+
+An optimal path is, by definition, one that maximizes or minimizes the path value $V[y]$, which is equivalent to the sum of state values (discrete-time), or the intergrals of state values (continuous-time).
+
+In continuous time, since each arc is infinitesimal in length, 3 pieces of information is needed to for arc identification:
+1. $t$: starting stage (time)
+2. $y(t)$: starting state
+3. $y'(t) \equiv dy/dt$: The direction in which the arc proceeds
+For that, the general expression for ar values is $F[t, y(t), y'(t)]$, and the path-value functional can be written as:
+
+$$
+V[y] = \int_{0}^{T} F[t, y(t), y\prime(t)] dt
+$$
+
+** Optimal control vs. Dynamic Programing
+*Optimal control theory* and *Dynamic Programming* are two modern extensions of the Caculus of Variations:
+
+- The single most significant development in optimal control theory is known as the *Maximum Principle*. This principle is commonly associated with the Russian mathematician Lev Pontryagin (cite:pontryagin2018mathematical), although an American mathematician, Magnus R. Hestenes, independently produced comparable work in a Rand Corp. report in 1949.
+- The dynamic programming approach, developed by Richard E. Bellman (cite:Bellman1954), breaks the dynamic optimization into a sequence of easier problem, as the Bellman's *Principle of Optimality* prescribes.
+
+* The Optimal Control Approach to Dynamic Optimization
+** The simplest optimization problem in OC
+
+#+begin_export latex
+\begin{align*}
+\text{Maximize} \quad & V = \int_0^T(t, y, u)  \\
+\text{s.t.} \quad     & \dot{y} = f(t,y,u)  \\
+                  & y(0) = A y(T) \quad \text{ free } \quad \text{ A, T given } \\
+\text{and} \quad      & u(t) \in \mathscr{U} \quad \text{ for all } t \in [0, T]
+\end{align*}
+#+end_export
+
+- Notation :: the dotted $\dot{y}$ denotes the first order derivation in $t$
+- Notation :: lowercase $f$ denotes the function symbol in the equation of motion
+- Notation :: capital $F$ denotes the intergrand function in the objective function
+
+If $\dot{y} = u$, the problem is precisely the vertical terminal line problem in calculus of variations.
+
+** Pontryagin's Maximum Principle
+
+For a Hamiltonian:
+$$
+H = F(t, y_{t}, u_{t}) + \lambda_{t} f(t, y_{t}, u_{t})
+$$
+
+- Notation :: $\lambda$ denotes the *costate variable* or *auxiliary variable*.
+
+
+The Pontryagin Maximum Principle introduced the *necessary conditions* for the optimization problem:
+
+1. $\max_{u} H(t, y_{t}, u_{t}, \lambda_{t}) \quad \text{for all } t \in [0, T]$
+2. $\frac{\partial H}{\partial y_{t}} = - \dot{\lambda}_{t} = - \frac{\partial \lambda_{t}}{\partial t}$
+3. $\frac{\partial H}{\partial \lambda_t} = \dot{y}_t$
+4. And a transversality condition (such as: $\dot{\lambda}_{T} = 0$)
+
+** The transversality condition
+
+This condition specifies what would happen if we /transverse/ outside of the planning horizon.
+
+Different variations of the terminal conditions:
+- Horizontal terminal line: $[H]_{t=T} = 0$
+- Terminal Curve $y_{T} = \phi(T)$: $[H - \lambda\phi']_{t=T}=0$
+
+** Case study: bang-bang problem
+
+#+begin_export latex
+\begin{align*}
+\text{Maximize} \quad & V = \int_0^{2} (2y - 3u) dt \\
+\text{s.t.} \quad     & \dot{y} = y + u \\
+                  & y(0) = 4; \quad y(2) \text{ free } \\
+\text{and} \quad      & u(t) \in \mathscr{U} = [0, 2]
+\end{align*}
+#+end_export
+
+** Sufficient conditions
+There are two of such sufficient theorems: the *Mangasarian theorem* and the *Arrow theorem*.
+*** Mangasarian sufficience theorem
+1. both the $F$ and $f$ functions are differentiable and concave in the variable $(y, u)$ jointly
+2. in the optimal solution it is true that:
+   $$
+   \lambda(t) \geq 0 \text{ for all } t \in [0, T] \quad \text{if } f \text{ is nonlinear in } y \text{ or in } u
+   $$
+** Sufficient conditions
+
+At any $t$, given $y$ and $\lambda$, the $H$ maximized by a particular $u$, $u^{*}$, which depends on $t$, $y$, and $\lambda$:
+
+$$
+u^{*} =u^{*}(t, y, \lambda)
+$$
+
+When we subtitute this into the Halmonian, we obtain:
+
+$$
+H^{0}(t, y, \lambda) = F(t,y,u^{*}) + \lambda f(t,y,u^{*})
+$$
+
+Note that $H^{0}$ is evaluated along $u^{*}$ only, not $t$ and $y$.
+
+*** Arrow sufficience theorem
+$H^{0}$ is concave in $y$ for all $t$ in  time interval $[0, T]$, for a given $\lambda$.
+
+** Case study: Capital theory
+
+The following problem is from textcite:Dorfman1969:
+
+#+begin_export latex
+\begin{align*}
+\text{Maximize} \quad & \Pi = \int_0^{T} \pi(t, K, u) dt \\
+\text{s.t.} \quad     & \dot{K} = f(t, K, u) \\
+\text{and} \quad      & K(0) = K_{0} \quad K(T) \text{ free} \quad (K_{0}, T \text{ given})
+\end{align*}
+#+end_export
+
+Particularly we examine the case that:
+
+#+begin_export latex
+\begin{align*}
+\pi & = K_t(au_t - \frac{b}{2}u_t^2) dt \\
+\dot{K} & = c K_t
+\end{align*}
+#+end_export
+
+** Case study: Capital theory
+
+|----------+--------------------+---------------------------------------------|
+| *FOC*    | *Equations*        | *Interpretion*                              |
+|----------+--------------------+---------------------------------------------|
+| Choice   | $dH/du =0$         | Find the optimal balance between current    |
+|          |                    | welfares and future consequences            |
+|----------+--------------------+---------------------------------------------|
+| State    | $dH/dk = -\dot{\lambda}$ | The marginal value of the state variable is |
+|          |                    | decreasing at the same rate at which it is  |
+|          |                    | generating benefit.                         |
+|          |                    | OR                                          |
+|          |                    | Along the optimal path, the loss that would |
+|          |                    | be suffered if we delayed acquisition of a  |
+|          |                    | marginal unit of capital for an instant     |
+|          |                    | must equal the instantaneous marginal       |
+|          |                    | value of that unit of capital.              |
+|----------+--------------------+---------------------------------------------|
+| Co-state | $dH/d\lambda = \dot{k}$  | The state equation must hold.               |
+|----------+--------------------+---------------------------------------------|
+
+** The Current-Value Hamiltonian
+In economics, the integrand function $F$ often contains a *discount factor* $e^{\rho t}$:
+
+$$
+F(t,y,u) = G(t,y,u)e^{\rho t}
+$$
+
+We define a new multiplier $m$ such that:
+
+$$
+m = \lambda e^{\rho t}
+$$
+
+then $H_c \equiv He^{\rho t} = G(t, y, u) + mf(t,y,u)$
+
+$G$ is called the *Instanteous Utility Function*.
+
+** The Current-Value Hamiltonian
+
+The new conditions can be rearranged as
+
+1. $\max_{u} H_c \quad \text{for all } t \in [0, T]$
+2. $\frac{\partial H_c}{\partial y} = - \dot{m} + \rho m$
+3. $\frac{\partial H}{\partial u} = 0$
+4. And a transversality condition
+
+** Case study: The Ramsey-Cass-Koopmans model
+
+#+begin_export latex
+\begin{align*}
+\text{Maximize} \quad & \int_0^{\infty} U(c)e^{-rt} dt \\
+\text{s.t.} \quad     & \dot{k} = \phi(k) -c - (n + \delta)k \\
+                  & k(0) = k_{0} \\
+\text{and} \quad      & 0 \leq c(t) \leq \phi[k(t)]
+\end{align*}
+#+end_export
+
+* Bibliography
+** References
+\printbibliography

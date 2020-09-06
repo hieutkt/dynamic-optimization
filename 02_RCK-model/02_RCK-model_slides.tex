@@ -1,0 +1,276 @@
+% Created 2020-09-06 Sun 23:10
+% Intended LaTeX compiler: xelatex
+\documentclass[10pt]{beamer}
+\usepackage{fontspec}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{siunitx}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks=true, linkcolor=Blue, citecolor=BrickRed, urlcolor=PineGreen]{hyperref}
+\usepackage{indentfirst}
+\usepackage{minted}
+\usepackage{adjustbox}
+\usepackage[backend=bibtex,sorting=ydnt,style=authoryear]{biblatex}
+\AtBeginBibliography{\footnotesize}
+\addbibresource{~/Dropbox/Notes/Research/papers.bib}
+\usepackage{xeCJK}
+\usefonttheme{professionalfonts}
+\usetheme{metropolis}
+\usecolortheme{}
+\usefonttheme{}
+\useinnertheme{}
+\useoutertheme{}
+\author{Hieu Phay}
+\date{2020-09-06}
+\title{Dynamic optimization: the Ramsey-Cass-Koopman model}
+
+\setbeamercolor{alerted text}{fg=red!70!black}
+\hypersetup{
+ pdfauthor={Hieu Phay},
+ pdftitle={Dynamic optimization: the Ramsey-Cass-Koopman model},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.0.50 (Org mode 9.4)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+\label{sec:orgdb10c95}
+\begin{frame}[label={sec:orge74cf71}]{The Ramsey-Cass-Koopmans (RCK) model}
+\begin{itemize}
+\item \textcite{Ramsey1928} introduced a model of optimal savings. The model was not well-received at that time because it was too mathematically demanding.
+\item Almost thirty years later, the model was getting tractions when \textcite{RePEc:cwl:cwldpp:163} and \textcite{Cass1965} formalized and made extensions to the original model.
+\end{itemize}
+
+This model is commonly refered to as the \alert{Ramsey-Cass-Koopmans model of optimal growth}.
+\end{frame}
+
+\begin{frame}[label={sec:orgb344fd7}]{Why this model}
+\begin{itemize}
+\item The RCK model is iconic in neoclassical growth theories, and provides a natural benchmark case.
+\item The RCK model examine dynamics optimizations of over an infinite horizon, which makes it much easier to approach from the optimal control PoV
+\item The RCK model endogenize consumption, which makes it one of the first micro-founded models.
+\end{itemize}
+\end{frame}
+
+\section{Building blocks of the model}
+\label{sec:org0ac65d9}
+\begin{frame}[label={sec:orga703f67}]{Production function}
+There is a large number of identical firms, producing a common production . Each has access to the production function:
+
+$$
+Y = \Phi(K, L)
+$$
+
+Which is \alert{homogeneous} with both \(K\) and \(L\).
+
+We use the lowercase form \(y\) and \(k\) to denote output per labour and capital per labour:
+
+$$
+y = \phi(k)
+$$
+
+where \(\phi^{\prime}(\cdot) > 0\) and \(\phi^{\prime\prime}(\cdot) < 0\), \(\lim_{k \to 0} \phi^{'}(k) = \infty\) and \(\lim_{k \to \infty} \phi^{'}(k) = 0\)
+\end{frame}
+
+\begin{frame}[label={sec:org53c2c76}]{Firms}
+Firms face the constraints in capital:
+
+$$
+\dot{K} = I - \delta K = Y - C - \delta K
+$$
+
+Expanding \(\dot{K}\) into \(\frac{d(kL)}{dt}\), then use the product rule and divide \(L\) from both sides in the above equation give us:
+
+$$
+\dot{k} = \phi(k) - c - (n + \delta)k
+$$
+
+Also consumptions should be less than income from the same time period: \(0 \leq c(t) \leq \phi[k(t)]\)
+\end{frame}
+
+\begin{frame}[allowframebreaks]{Utility function}
+The household's utility function takes the form
+
+$$
+U = \int_{t=0}^{\infty} e^{-\rho t}U(c(t))L(t)dt
+$$
+
+where
+\begin{itemize}
+\item \(\rho\) is the \alert{discount rate}, the greater is \(\rho\), the less the household values futures consumption relative to current consumption.
+\item \(U(c(t))\) is the \alert{instantatneous utility function},
+\end{itemize}
+
+$$
+\int_0^{\infty}U(c)L(t)e^{-\rho t} dt = \int_0^{\infty} U(c) L_{0} e^{nt} e^-{\rho t} dt = L_0 \int_{0}^{\infty} U(c)e^{-(\rho-n)}dt
+$$
+
+
+\framebreak
+
+\(U(c(t))\) usually take the \alert{constant-relative-risk-aversion} form (\cite{arrow1965aspects,Pratt1964}):
+
+$$
+U(c(t)) = \frac{c(t)^{1-\theta}}{1-\theta}, \quad \theta  0, \quad \rho - n - (1 - \theta) > 0
+$$
+
+where:
+\begin{itemize}
+\item \(\theta\) represents the household's willingness to shift consumption between different periods: elasticity of subtitution between consumption at any two point in time is \(\frac{1}{\theta^{2}}\)
+\item The relative risk aversion \(RRA = -\frac{cU^{''}(c)}{U^{'}(c)}= \theta\)   is constant
+\item \(\rho - n - (1 - \theta) > 0\) ensures that lifetime utilities do not diverge.
+\end{itemize}
+
+In special case of \(\theta \to 1\), the instantaneous utility function simplifies to \(ln(c)\).
+\end{frame}
+
+\section{Model Analysis}
+\label{sec:org766ec81}
+\begin{frame}[label={sec:org71983be}]{The optimization problem}
+\begin{align*}
+\text{Maximize} \quad & \int_0^{\infty} U(c)e^{-rt} dt \\
+\text{s.t.} \quad     & \dot{k} = \phi(k) -c - (n + \delta)k \\
+                  & k(0) = k_{0} \\
+\text{and} \quad      & 0 \leq c(t) \leq \phi[k(t)]
+\end{align*}
+\end{frame}
+
+\begin{frame}[label={sec:org2de348a}]{The optimal control problem}
+For the Hamiltonian:
+
+$$
+H = U(c)e^{rt} + \lambda\left[\phi(k) - c - (n + \delta) k \right]
+$$
+
+The equations-of-motion conditions are written as:
+
+\begin{equation}
+  \dot{\lambda} = - \frac{\partial H}{\partial k} \Leftrightarrow \dot{\lambda} = -\lambda[\theta^{'}(k) - (n + \delta)]
+\end{equation}
+
+\begin{equation}
+  \dot{k} = \theta(k) - c - (n + \delta) k
+\end{equation}
+
+
+Since \(H\) is convex and \(c\) is unrestricted, we can accordingly find the maximum of \(H\) by setting:
+
+\begin{equation}
+\frac{\partial H}{\partial c} = U^{\prime}(c) e^{-rt} - \lambda = 0 \Leftrightarrow U^{\prime}(c) = \lambda e^{rt}
+\end{equation}
+\end{frame}
+
+\begin{frame}[label={sec:orgeb508ef}]{The optimal control problem}
+Examination on convexity of \(H\) (Fig. 9.2 \cite{chiang2000elements}):
+
+\begin{center}
+\includegraphics[width=.9\linewidth]{/home/hieuphay/Dropbox/Notes/.attach/c2/6256cf-a3c2-41ac-8ef8-ae6b8fcbae72/_20200904_060843screenshot.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{The Current-Value Hamiltonian}
+In economics, the integrand function \(F\) often contains a \alert{discount factor} \(e^{\rho t}\):
+
+$$
+F(t,y,u) = G(t,y,u)e^{\rho t}
+$$
+
+We define a new multiplier \(m\) such that:
+
+$$
+m = \lambda e^{\rho t}
+$$
+
+then \(H_c \equiv He^{\rho t} = G(t, y, u) + mf(t,y,u)\)
+
+\(G\) is called the \alert{Instanteous Utility Function}.
+
+\framebreak
+
+The new conditions can be rearranged as
+
+\begin{enumerate}
+\item \(\max_{u} H_c \quad \text{for all } t \in [0, T]\)
+\item \(\frac{\partial H_c}{\partial y} = - \dot{m} + \rho m\)
+\item \(\frac{\partial H}{\partial u} = 0\)
+\item And a transversality condition
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[label={sec:org66d6089}]{The optimal control problem (rephrased)}
+For the current-value Hamiltonian:
+
+$$
+H_{c} = U(c) + m[\phi(k) - c - (n + \delta)k]
+$$
+
+The derivative conditions are as follow:
+
+\begin{equation} \label{eq1}
+ \frac{\partial H_{c}}{\partial c} = U^{\prime}(c) - m = 0
+\end{equation}
+
+\begin{equation} \label{eq2}
+  \dot{k} = \frac{\partial H_{c}}{\partial m} = \phi(k) - c - (n + \delta)k
+\end{equation}
+
+\begin{equation*}
+\dot{m} &= -\frac{\partial H_{c}}{\partial k} + rm = -m[\phi^{\prime}(k) - (n + \delta)] + rm \\
+\end{equation*}
+
+\begin{equation} \label{eq3}
+\Leftrightarrow  \dot{m} &= -m[\phi^{\prime}(k) - (n + \delta + r)]
+\end{equation}
+\end{frame}
+
+\begin{frame}[label={sec:orgc90649a}]{Constructing the Phase Diagram}
+From (\ref{eq1}) and (\ref{eq3}) we have:
+
+\begin{equation} \label{eq4}
+  \dot{c} = - \frac{U^{\prime}(c)}{U^{\prime\prime}(c)}\left[\phi^{\prime}(k) - (n + \delta + r)\right]
+\end{equation}
+
+Along with (\ref{eq2}):
+
+$$
+\dot{k} = \frac{\partial H_{c}}{\partial m} = \phi(k) - c - (n + \delta)k
+$$
+
+We calculate the value where \(\dot{c} = 0\) and \(\dot{k} = 0\):
+
+\begin{align}
+  \begin{cases}
+    (\ref{eq2}) &\Rightarrow \dot{k}=0 \Leftrightarrow c = \phi(k) - (n + \delta)k \\
+    (\ref{eq4}) &\Rightarrow \dot{c}=0 \Leftrightarrow \phi^{\prime}(k) = n + \delta + r
+  \end{cases}
+\end{align}
+\end{frame}
+
+\begin{frame}[label={sec:org24e138e}]{Phase diagram analysis}
+The \(c-k\) phase diagram (Fig. 2.3 \cite{romer19_advan}):
+
+\begin{center}
+\includegraphics[width=.9\linewidth]{/home/hieuphay/Dropbox/Notes/.attach/9d/f184e2-538c-40bc-94f4-590d9dfde5ac/_20200904_073411screenshot.png}
+\end{center}
+\end{frame}
+
+
+\begin{frame}[allowframebreaks]{References}
+\printbibliography
+\end{frame}
+\end{document}
