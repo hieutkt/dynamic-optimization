@@ -112,7 +112,7 @@ $$
 $U(c(t))$ usually take the *constant-relative-risk-aversion* form (cite:arrow1965aspects,Pratt1964):
 
 $$
-U(c(t)) = \frac{c(t)^{1-\theta}}{1-\theta}, \quad \theta  0, \quad \rho - n - (1 - \theta) > 0
+U(c(t)) = \frac{c(t)^{1-\theta}}{1-\theta}, \quad \theta \neq 0, \quad \rho - n - (1 - \theta) > 0
 $$
 
 where:

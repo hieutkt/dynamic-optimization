@@ -1,4 +1,4 @@
-% Created 2020-09-06 Sun 23:10
+% Created 2020-09-06 Sun 23:26
 % Intended LaTeX compiler: xelatex
 \documentclass[10pt]{beamer}
 \usepackage{fontspec}
@@ -49,8 +49,8 @@
 \maketitle
 
 \section{Introduction}
-\label{sec:orgdb10c95}
-\begin{frame}[label={sec:orge74cf71}]{The Ramsey-Cass-Koopmans (RCK) model}
+\label{sec:orgb9df8ae}
+\begin{frame}[label={sec:org029717e}]{The Ramsey-Cass-Koopmans (RCK) model}
 \begin{itemize}
 \item \textcite{Ramsey1928} introduced a model of optimal savings. The model was not well-received at that time because it was too mathematically demanding.
 \item Almost thirty years later, the model was getting tractions when \textcite{RePEc:cwl:cwldpp:163} and \textcite{Cass1965} formalized and made extensions to the original model.
@@ -59,7 +59,7 @@
 This model is commonly refered to as the \alert{Ramsey-Cass-Koopmans model of optimal growth}.
 \end{frame}
 
-\begin{frame}[label={sec:orgb344fd7}]{Why this model}
+\begin{frame}[label={sec:org019dfb9}]{Why this model}
 \begin{itemize}
 \item The RCK model is iconic in neoclassical growth theories, and provides a natural benchmark case.
 \item The RCK model examine dynamics optimizations of over an infinite horizon, which makes it much easier to approach from the optimal control PoV
@@ -68,8 +68,8 @@ This model is commonly refered to as the \alert{Ramsey-Cass-Koopmans model of op
 \end{frame}
 
 \section{Building blocks of the model}
-\label{sec:org0ac65d9}
-\begin{frame}[label={sec:orga703f67}]{Production function}
+\label{sec:orgcaa1a4a}
+\begin{frame}[label={sec:org3a13c68}]{Production function}
 There is a large number of identical firms, producing a common production . Each has access to the production function:
 
 $$
@@ -87,7 +87,7 @@ $$
 where \(\phi^{\prime}(\cdot) > 0\) and \(\phi^{\prime\prime}(\cdot) < 0\), \(\lim_{k \to 0} \phi^{'}(k) = \infty\) and \(\lim_{k \to \infty} \phi^{'}(k) = 0\)
 \end{frame}
 
-\begin{frame}[label={sec:org53c2c76}]{Firms}
+\begin{frame}[label={sec:org7786ece}]{Firms}
 Firms face the constraints in capital:
 
 $$
@@ -126,7 +126,7 @@ $$
 \(U(c(t))\) usually take the \alert{constant-relative-risk-aversion} form (\cite{arrow1965aspects,Pratt1964}):
 
 $$
-U(c(t)) = \frac{c(t)^{1-\theta}}{1-\theta}, \quad \theta  0, \quad \rho - n - (1 - \theta) > 0
+U(c(t)) = \frac{c(t)^{1-\theta}}{1-\theta}, \quad \theta \neq 0, \quad \rho - n - (1 - \theta) > 0
 $$
 
 where:
@@ -140,8 +140,8 @@ In special case of \(\theta \to 1\), the instantaneous utility function simplifi
 \end{frame}
 
 \section{Model Analysis}
-\label{sec:org766ec81}
-\begin{frame}[label={sec:org71983be}]{The optimization problem}
+\label{sec:orge85f0d2}
+\begin{frame}[label={sec:org8609de5}]{The optimization problem}
 \begin{align*}
 \text{Maximize} \quad & \int_0^{\infty} U(c)e^{-rt} dt \\
 \text{s.t.} \quad     & \dot{k} = \phi(k) -c - (n + \delta)k \\
@@ -150,7 +150,7 @@ In special case of \(\theta \to 1\), the instantaneous utility function simplifi
 \end{align*}
 \end{frame}
 
-\begin{frame}[label={sec:org2de348a}]{The optimal control problem}
+\begin{frame}[label={sec:orge7e335e}]{The optimal control problem}
 For the Hamiltonian:
 
 $$
@@ -175,7 +175,7 @@ Since \(H\) is convex and \(c\) is unrestricted, we can accordingly find the max
 \end{equation}
 \end{frame}
 
-\begin{frame}[label={sec:orgeb508ef}]{The optimal control problem}
+\begin{frame}[label={sec:org60b0761}]{The optimal control problem}
 Examination on convexity of \(H\) (Fig. 9.2 \cite{chiang2000elements}):
 
 \begin{center}
@@ -212,7 +212,7 @@ The new conditions can be rearranged as
 \end{enumerate}
 \end{frame}
 
-\begin{frame}[label={sec:org66d6089}]{The optimal control problem (rephrased)}
+\begin{frame}[label={sec:orgc0e9c85}]{The optimal control problem (rephrased)}
 For the current-value Hamiltonian:
 
 $$
@@ -238,7 +238,7 @@ The derivative conditions are as follow:
 \end{equation}
 \end{frame}
 
-\begin{frame}[label={sec:orgc90649a}]{Constructing the Phase Diagram}
+\begin{frame}[label={sec:org324a8ee}]{Constructing the Phase Diagram}
 From (\ref{eq1}) and (\ref{eq3}) we have:
 
 \begin{equation} \label{eq4}
@@ -261,7 +261,7 @@ We calculate the value where \(\dot{c} = 0\) and \(\dot{k} = 0\):
 \end{align}
 \end{frame}
 
-\begin{frame}[label={sec:org24e138e}]{Phase diagram analysis}
+\begin{frame}[label={sec:orgfc4ee05}]{Phase diagram analysis}
 The \(c-k\) phase diagram (Fig. 2.3 \cite{romer19_advan}):
 
 \begin{center}
